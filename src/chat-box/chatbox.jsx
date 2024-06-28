@@ -2,7 +2,7 @@ import React, { useState , useEffect} from 'react';
 import './style.css'; // Ensure your CSS file is correctly referenced
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import axios from 'axios';
-
+import { FaUser } from "react-icons/fa";
 
 import chatbutton from './images/chat.svg'
 import chatlogo from './images/chat-logo.svg'
@@ -28,7 +28,6 @@ const ChatBox = () => {
 //   const api = axios.create({
 //     baseURL: 'http://127.0.0.1:8000' // or any other API base URL
 // });
-console.log(messages);
 axios.defaults.baseURL = 'http://127.0.0.1:8000';
 
   const handleChatButtonClick = () => {
@@ -42,6 +41,7 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000';
   };
 
   const handleModalToggle = () => {
+    console.log('Toggling modal visibility');
     setModalVisible(!modalVisible);
   };
    
@@ -55,6 +55,8 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000';
 
    
   }, []);
+
+  console.log(messages);
 
 useEffect(() => {
   const handleKeyDown = (event) => {
@@ -77,6 +79,14 @@ useEffect(() => {
   };
   }, []);
 
+  const handleKeyPress = (event) => {
+    if (event.key === 'Enter') {
+    event.preventDefault(); 
+
+      sendMessage();
+    }
+  };
+
   const sendMessage = () => {
     if (inputValue.trim() !== '') {
       displayMessage(inputValue, '', 'in');
@@ -86,15 +96,26 @@ useEffect(() => {
     }
   };
 
-  const displayMessage = (message, source, messageType) => {
+  const displayMessage = (message, source, messageType,link) => {
+    const now = new Date();
+    const hours = now.getHours().toString().padStart(2, '0');
+    const minutes = now.getMinutes().toString().padStart(2, '0');
    
+
     const formattedMessage = message.replace(/\n/g, '<br>');
+    const formattedlink = decodeURIComponent(link).replace(/%22$/, '');
+    const Dlink = "D:/Railtel/railtel-ui/Public/documents/OPD.pdf"
     const messageObj = {
       message: formattedMessage,
       source: source,
       messageType: messageType,
-      id: Date.now()
+      link:link,
+      id: Date.now(),
+      time: `${hours}:${minutes}`,
+     
     };
+  
+  
     setMessages((prevMessages) => {
       const updatedMessages = [...prevMessages, messageObj];
       localStorage.setItem('chatMessages', JSON.stringify(updatedMessages));
@@ -117,16 +138,23 @@ useEffect(() => {
     })
     .then(response => response.json())
     .then(data => {
+      console.log(data);
         // Display each response with its respective source
+        if (data.greet){
+          displayMessage(data.greet,'greet','greet')
+      }
         if (data.QnA) {
             displayMessage(data.QnA, 'QnA', 'out');
         }
         if (data.gpt_answer){
-            displayMessage(data.gpt_answer, 'youtube_audio', 'out');
+            displayMessage(data.gpt_answer, 'youtube_video', 'out', data.link);
         }
         if (data.best_answer){
             displayMessage(data.best_answer, 'Suggested_answer', 'out');
         }
+        if (data.answer_manual){
+          displayMessage(data.answer_manual, 'user_manual', 'out', data.link);
+      }
         hideLoading(); // Hide loading GIF on response
     })
 }
@@ -157,13 +185,13 @@ useEffect(() => {
     <div>
       <div className="headline"></div>
 
-
+  
       
-
-      <div className="chat-button" onClick={handleChatButtonClick}>
+     
+      <div className=" chat-button" onClick={handleChatButtonClick}>
         <img src={chatbutton} className="pad-25"  />
       </div>
-
+      
       
      
       <div className="chat-box " style={{ visibility: chatBoxVisible ? 'visible' : 'hidden' }}>
@@ -177,22 +205,35 @@ useEffect(() => {
             <i className="fa fa-times close-btn-sty" onClick={handleCloseButtonClick}></i>
           </p>
         </div>
+        <div className='chat-bot-middlebox'>
         {isLoading && (
             <div className="loading">
               <DotLoader color={"#123abc"} loading={isLoading} size={40} />
             </div>
           )}
         {messages.map((msg, index) => (
+          
         <div className="chat-box-body">
             
-          {msg.messageType !== 'out' && (
+          {msg.messageType !== 'out' && msg.messageType !== 'greet'&&(
            
           <div className="chat-box-body-send">
             <p>{msg.message}</p>
             
+            
           </div>
+          
 
           )}
+           {msg.messageType == 'greet' && (
+           
+           <div className="chat-box-body-greet">
+            <FaUser />
+             <p>{msg.message}</p>
+             
+           </div>
+ 
+           )}
             {msg.messageType == 'out' && (
 
           <div className="chat-box-body-receive">
@@ -200,18 +241,32 @@ useEffect(() => {
             <p className="chat-txt-hed">HMIS</p>
             <p className="chat-txt-cont">
              {msg.message}
+             
             </p>
-            {msg.message.youtube_link && (
+            {msg.source == 'youtube_video' && (
             <iframe
-              width="560"
-              height="315"
-              src={msg.message.youtube_link.replace("watch?v=", "embed/")}
+              width="250"
+              height="250"
+              src={`https://www.youtube.com/embed/${msg.link}`}
               frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               title={`video-${index}`}
             ></iframe>
-          )}
+            
+            )}
+
+            {msg.source == 'user_manual' &&(
+             <a
+             href={`/downloads/${msg.link}`}
+             download
+             target="_blank"
+             rel="noopener noreferrer"
+           >
+             Download Manual
+           </a>
+            )}
+          
             {/* <div>
               <img src={youtube}className="pad-25" alt="YouTube" />
             </div> */}
@@ -224,17 +279,20 @@ useEffect(() => {
             </div>
           </div>
             )}
-
-          {/* <div className="chat-box-time">Today 11:52</div> */}
+{msg.messageType == 'out' && (
+          <div className="chat-box-time">Today {msg.time}</div>
+)}
         </div>
         ))}
+        </div>
         <div className="chat-box-footer">
           <input placeholder=" " type="text"  
             value={inputValue}
+            onKeyDown={handleKeyPress}
             onChange={handleInputChange}
           />
           <i className="send">
-            <img src={sendchat}className="pad-25" alt="Send" onClick={sendMessage} />
+            <img src={sendchat}className="pad-25" alt="Send" onClick={sendMessage}   />
           </i>
         </div>
       </div>
@@ -245,6 +303,7 @@ useEffect(() => {
 
        <div className="p60">dd</div> 
       {/* <div className="modal " style={{ visibility: chatBoxVisible ? 'visible' : 'hidden' }}> */}
+
 
        <div className={`modal ${modalVisible ? 'show-modal' : ''}`}>
         <div className="modal-content">
