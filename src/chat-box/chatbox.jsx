@@ -193,6 +193,7 @@ const ChatBox = () => {
   }, []);
 
   const sendToBackend = useCallback((userInput) => {
+  
     showLoading();
     fetch("http://localhost:8000/chatbot/", {
       method: "POST",
@@ -294,6 +295,8 @@ const ChatBox = () => {
           handleInputChange={handleInputChange}
           handleKeyPress={handleKeyPress}
           sendMessage={sendMessage}
+          isLoading={isLoading}
+
         />
       </div>
       <div className="p60"></div>
@@ -311,7 +314,7 @@ const ChatBox = () => {
 
 
 // Input Container 
-const ChatInput = memo(({ inputValue, handleInputChange, handleKeyPress, sendMessage }) => (
+const ChatInput = memo(({ inputValue, handleInputChange, handleKeyPress, sendMessage, isLoading }) => (
   <div className="chat-box-footer">
   <input
     placeholder=" Type here..."
@@ -320,15 +323,22 @@ const ChatInput = memo(({ inputValue, handleInputChange, handleKeyPress, sendMes
     onKeyDown={handleKeyPress}
     onChange={handleInputChange}
   />
-  <i className={`send ${!inputValue.trim() ? 'disabled' : ''}`}>
-    <img
-      src={sendchat}
-      className="pad-25"
-      alt="Send"
-      style={{ cursor: !inputValue.trim() ? 'not-allowed' : 'pointer' }}
-      onClick={sendMessage}
-    />
-  </i>
+   {isLoading ? (
+            <div className="loading">
+
+      {/* <DotLoader color={"#123abc"} loading={isLoading} size={20} /> */}
+      </div>
+    ) : (
+      <i className={`send ${!inputValue.trim() ? 'disabled' : ''}`}>
+        <img
+          src={sendchat}
+          className="pad-25"
+          alt="Send"
+          style={{ cursor: !inputValue.trim() ? 'not-allowed' : 'pointer' }}
+          onClick={sendMessage}
+        />
+      </i>
+    )}
 </div>
 ));
 
