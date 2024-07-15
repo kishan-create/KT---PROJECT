@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Raleway|Ubuntu&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
 body {
   background: #fff;
   padding: 0;
@@ -38,6 +39,8 @@ body {
   visibility: hidden;
   box-shadow: 2px 2px 6px #8f8f8f;
   padding-bottom: 56px;
+  position: fixed;
+
 }
 .chat-box-header {
   padding-top: 10px;
@@ -71,10 +74,24 @@ body {
     line-height: 33px;
     margin: 0;
 }
+
+
 .chat-box-body {
   height: 75%;
   background: #fff;
-  padding: 15px 20px;
+  padding: 0px 20px;
+  display: block;
+  clear: both;
+
+}
+
+.chat-box-tyy {
+  width: auto;
+    float: right;
+    background: white;
+    padding: 10px 20px;
+   
+    margin-bottom: 14px;
 }
 .chat-box-body-send {
   width: auto;
@@ -91,7 +108,7 @@ body {
 .chat-box-body-greet{
   width: auto;
   float: left;
-  background: white;
+  background: #D8F2FC;
   padding: 10px 20px;
   border-bottom-left-radius: 8px;
   border-top-left-radius: 8px;
@@ -101,6 +118,7 @@ body {
   border: 1px solid #00ADEE;
   display: flex;
   align-items: center;
+  
 
 }
 .chat-box-body-greet p {
@@ -200,24 +218,25 @@ body {
   right: 0;   
    margin: 20px 35px;
   cursor: pointer;
+  position: fixed;
 }
 .chat-button span::before {
   content: "";
   height: 15px;
   width: 15px;
-  background: #47cf73;
+  /* background: #47cf73; */
   position: absolute;
   transform: translate(0, -7px);
   border-radius: 15px;
 }
-.chat-button span::after {
+/* .chat-button span::after {
   content: "Message Us";
   font-size: 14px;
   color: white;
   position: absolute;
   left: 50px;
   top: 18px;
-}
+} */
 
 .modal {
   position: fixed;
@@ -297,15 +316,7 @@ body {
   border-bottom-left-radius: 8px; 
     border-bottom-right-radius: 8px;
 }
-.chat-box-time {
-  width: 250px;
-  float: left;
-  background: #ffffff;
-  padding: 1px 0px; 
-  margin-top: -4px; 
-  margin-bottom: 14px; 
-  font-size: 12px;
-}
+
 .chat-icon-from-top {
   position: absolute;
   width: 25px;
@@ -333,43 +344,137 @@ body {
   max-height: 350px;
   min-height: 200px;
 }
+
+.youtube-link {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #1a0dab;
+  text-decoration: none;
+  font-weight: bold;
+}
+
 .tooltip {
-  position: relative;
+  display: visible;
+  position: absolute;
+  right: -12px;
+  top: -40px;
+  transform: translateY(-50%);
+  background-color: #1496bb;
+  padding: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  min-height: 20px;  /* Adjust as needed */
+  width: 100px;
+  height: auto;
+  color: #fff;
+}
+
+.tooltip:before {
+  bottom: -20px;
+  content: " ";
+  display: block;
+  height: 20px;
+  left: 0;
+  position: absolute;
+  width: 100%;
+}
+
+.tooltip:after {
+  border-left: solid transparent 10px;
+  border-right: solid transparent 10px;
+  border-top: solid #1496bb 10px;
+  bottom: -10px;
+  content: " ";
+  height: 0;
+  left: 50%;
+  margin-left: 0px;
+  position: absolute;
+  width: 0;
+}
+
+
+
+
+span.tooltip.show {
   display: inline-block;
-  cursor: pointer;
-}
-
-/* Tooltip text */
-.tooltip .tooltiptext {
-  visibility: hidden;
-  width: 120px;
-  background-color: rgb(255, 255, 255);
-  color: #000;
+  color: #fff;
+  font-size: 12px;
   text-align: center;
-  border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%; /* Position the tooltip above the text */
-  left: 50%;
-  margin-left: -60px; /* Center the tooltip */
-  opacity: 0;
-  transition: opacity 0.3s;
+  font-weight: 500px;
+}
+.tooltip img{
+  width:30px;
+  margin: 0px auto;
+}
+span.tooltip.show  p{
+  width: 100%;
+  float: left;
+  display: block;
+  text-align: center;
+  font-weight: 500;
+  padding: 0;
+  margin: 0;
+  font-size: 12px;
+}
+/* .chat-box-body {
+  position: relative;
+  margin-bottom: 10px;
+  background: #ffffff;
+
+
 }
 
-.tooltip .tooltiptext::after {
-  content: "";
-  position: absolute;
-  top: 100%; /* At the bottom of the tooltip */
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
+.chat-box-body-send .chat-box-time {
+
 }
 
-/* Show the tooltip text when you mouse over the tooltip container */
-.tooltip:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+.chat-box-body-receive .chat-box-time,
+.chat-box-body-greet .chat-box-time {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  font-size: 0.8em;
+  color: #888;
+} */
+.chat-box-time {
+  width: 250px;
+  background: none;
+  margin-top: -17px;
+  margin-bottom: 5px;
+  font-size: 9px;
+  width: 100%;
+  font-family: "Inter", sans-serif;
+  text-align: right;
+  float: right;
+  padding: 10px 0px;
+  color: #84818A;
 }
+.chat-box-timer {
+  width: 250px;
+  background: #ffffff;
+  margin-top: -14px; 
+  margin-bottom: 14px; 
+  font-size: 11px;
+
+  width: auto;
+  float: left;
+  padding: 10px 20px;
+color: grey;
+   
+}
+
+
+.send.disabled {
+  opacity: 0.5; /* Make the button look disabled */
+  pointer-events: none; /* Disable pointer events to prevent clicking */
+}
+
+.chat-box-right-send {
+  float: right;
+  display: block;
+}
+.chat-box-left{
+  float: left;
+  display: block;
+}
+.chat-box-left .chat-box-time{text-align: left;float: left;}
