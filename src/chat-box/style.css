@@ -12,9 +12,19 @@ body {
   color: #fff;
   text-align: center;
   background: url("https://farm9.staticflickr.com/8088/8363737128_b76782c7a2_b.jpg") no-repeat center center;
-  background: url(./images/head-bg.svg); 
+  /* background: url(./images/head-bg.svg);  */
+  /* background: url(./images/Wireframe\ -\ 1.png);  */
+  background: url(./images/Railtel-frame.png);
+
   background-size: cover;
   padding: 312px 0px;
+}
+.youtube-url {
+  word-wrap: break-word; /* Allow line breaks within the URL */
+  white-space: nowrap; /* Prevent wrapping to next line unless broken */
+  overflow: hidden; /* Hide any excess content that overflows */
+  text-overflow: ellipsis; /* Add ellipsis (...) if URL is too long */
+  max-width: 250px; /* Set a maximum width for the URL container */
 }
 .chat-box {
   
@@ -42,6 +52,9 @@ body {
   position: fixed;
 
 }
+
+
+
 .chat-box-header {
   padding-top: 10px;
     padding-bottom: 10px;
@@ -79,7 +92,7 @@ body {
 .chat-box-body {
   height: 75%;
   background: #fff;
-  padding: 0px 20px;
+  padding: 5px 20px;
   display: block;
   clear: both;
 
@@ -318,10 +331,11 @@ body {
 }
 
 .chat-icon-from-top {
-  position: absolute;
+  position: relative;
   width: 25px;
   margin-top: -30px;
   margin-left: -25px;
+
 }
 .p60 {
   padding: 60px;
@@ -478,3 +492,32 @@ color: grey;
   display: block;
 }
 .chat-box-left .chat-box-time{text-align: left;float: left;}
+
+.chat-icon-from-top-new {
+  width: 25px;
+  margin-top: -66px;
+  margin-left: -25px;
+  padding: 23px 4px;
+  position: relative;
+}
+@media only screen and (max-width: 567px) {
+.chat-box {
+  width: 100%;
+  position: absolute;
+  margin: 0 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 15;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.005);
+  right: 0;
+  bottom: 0;
+  margin: 15px 0px;
+  background: #fff;
+  border-radius: 15px;
+  visibility: hidden;
+  box-shadow: 2px 2px 6px #8f8f8f;
+  padding-bottom: 56px;
+  position: fixed;
+}
+}
