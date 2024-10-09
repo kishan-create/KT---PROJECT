@@ -16,6 +16,7 @@ body {
   /* background: url(./images/Wireframe\ -\ 1.png);  */
   background: url(./images/Railtel-frame.png);
 
+
   background-size: cover;
   padding: 312px 0px;
 }
@@ -333,8 +334,8 @@ body {
 .chat-icon-from-top {
   position: relative;
   width: 25px;
-  margin-top: -30px;
-  margin-left: -25px;
+  margin-top: -39px;
+  margin-left: -31px;
 
 }
 .p60 {
@@ -496,7 +497,7 @@ color: grey;
 .chat-icon-from-top-new {
   width: 25px;
   margin-top: -66px;
-  margin-left: -25px;
+  margin-left: -34px;
   padding: 23px 4px;
   position: relative;
 }
